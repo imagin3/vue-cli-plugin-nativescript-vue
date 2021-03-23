@@ -4,16 +4,16 @@ const { relative, resolve, sep, join } = require('path');
 const fs = require('fs-extra');
 
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/dist/');
 const NsVueTemplateCompiler = require('nativescript-vue-template-compiler');
 
-const nsWebpack = require('nativescript-dev-webpack');
-const nativescriptTarget = require('nativescript-dev-webpack/nativescript-target');
+const nsWebpack = require('@nativescript/webpack');
+const nativescriptTarget = require('@nativescript/webpack/nativescript-target');
 const { NativeScriptWorkerPlugin } = require('nativescript-worker-loader/NativeScriptWorkerPlugin');
 
 const hashSalt = Date.now().toString();
@@ -368,8 +368,8 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
       .rule('native-loaders')
       // .test(new RegExp(entryPath)) --> OLD ENTRY - TO BE REMOVED
       .test(new RegExp(nsWebpack.getEntryPathRegExp(appFullPath, entryPath + '.(js|ts)')))
-      .use('nativescript-dev-webpack/bundle-config-loader')
-      .loader('nativescript-dev-webpack/bundle-config-loader')
+      .use('@nativescript/webpack/bundle-config-loader')
+      .loader('@nativescript/webpack/bundle-config-loader')
       .options({
         registerPages: true, // applicable only for non-angular apps
         loadCss: !snapshot, // load the application css if in debug mode
@@ -383,12 +383,12 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.when(platform === 'android', (config) => {
       config.module
         .rule('native-loaders')
-        .use('nativescript-dev-webpack/android-app-components-loader')
-        .loader('nativescript-dev-webpack/android-app-components-loader')
+        .use('@nativescript/webpack/android-app-components-loader')
+        .loader('@nativescript/webpack/android-app-components-loader')
         .options({
           modules: appComponents
         })
-        .before('nativescript-dev-webpack/bundle-config-loader')
+        .before('@nativescript/webpack/bundle-config-loader')
         .end();
     });
 
@@ -527,13 +527,13 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.module
       .rule('css')
       .oneOf('normal')
-      .use('nativescript-dev-webpack/apply-css-loader')
-      .loader('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/apply-css-loader')
+      .loader('@nativescript/webpack/apply-css-loader')
       .before('css-loader')
       .end()
-      .use('nativescript-dev-webpack/style-hot-loader')
-      .loader('nativescript-dev-webpack/style-hot-loader')
-      .before('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/style-hot-loader')
+      .loader('@nativescript/webpack/style-hot-loader')
+      .before('@nativescript/webpack/apply-css-loader')
       .end()
       .use('css-loader')
       .loader('css-loader')
@@ -572,13 +572,13 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.module
       .rule('scss')
       .oneOf('normal')
-      .use('nativescript-dev-webpack/apply-css-loader')
-      .loader('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/apply-css-loader')
+      .loader('@nativescript/webpack/apply-css-loader')
       .before('css-loader')
       .end()
-      .use('nativescript-dev-webpack/style-hot-loader')
-      .loader('nativescript-dev-webpack/style-hot-loader')
-      .before('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/style-hot-loader')
+      .loader('@nativescript/webpack/style-hot-loader')
+      .before('@nativescript/webpack/apply-css-loader')
       .end()
       .use('css-loader')
       .loader('css-loader')
@@ -634,13 +634,13 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.module
       .rule('sass')
       .oneOf('normal')
-      .use('nativescript-dev-webpack/apply-css-loader')
-      .loader('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/apply-css-loader')
+      .loader('@nativescript/webpack/apply-css-loader')
       .before('css-loader')
       .end()
-      .use('nativescript-dev-webpack/style-hot-loader')
-      .loader('nativescript-dev-webpack/style-hot-loader')
-      .before('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/style-hot-loader')
+      .loader('@nativescript/webpack/style-hot-loader')
+      .before('@nativescript/webpack/apply-css-loader')
       .end()
       .use('css-loader')
       .loader('css-loader')
@@ -692,13 +692,13 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.module
       .rule('stylus')
       .oneOf('normal')
-      .use('nativescript-dev-webpack/apply-css-loader')
-      .loader('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/apply-css-loader')
+      .loader('@nativescript/webpack/apply-css-loader')
       .before('css-loader')
       .end()
-      .use('nativescript-dev-webpack/style-hot-loader')
-      .loader('nativescript-dev-webpack/style-hot-loader')
-      .before('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/style-hot-loader')
+      .loader('@nativescript/webpack/style-hot-loader')
+      .before('@nativescript/webpack/apply-css-loader')
       .end()
       .use('css-loader')
       .loader('css-loader')
@@ -748,13 +748,13 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config.module
       .rule('less')
       .oneOf('normal')
-      .use('nativescript-dev-webpack/apply-css-loader')
-      .loader('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/apply-css-loader')
+      .loader('@nativescript/webpack/apply-css-loader')
       .before('css-loader')
       .end()
-      .use('nativescript-dev-webpack/style-hot-loader')
-      .loader('nativescript-dev-webpack/style-hot-loader')
-      .before('nativescript-dev-webpack/apply-css-loader')
+      .use('@nativescript/webpack/style-hot-loader')
+      .loader('@nativescript/webpack/style-hot-loader')
+      .before('@nativescript/webpack/apply-css-loader')
       .end()
       .use('css-loader')
       .loader('css-loader')
@@ -795,14 +795,14 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     //   config.module.rules.push(
     //       {
     //           test: /-page\.js$/,
-    //           use: "nativescript-dev-webpack/script-hot-loader"
+    //           use: "@nativescript/webpack/script-hot-loader"
     //       },
     //       {
     //           test: /\.(html|xml)$/,
-    //           use: "nativescript-dev-webpack/markup-hot-loader"
+    //           use: "@nativescript/webpack/markup-hot-loader"
     //       },
 
-    //       { test: /\.(html|xml)$/, use: "nativescript-dev-webpack/xml-namespace-loader" }
+    //       { test: /\.(html|xml)$/, use: "@nativescript/webpack/xml-namespace-loader" }
     //   );
     // }
 
@@ -855,14 +855,15 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     // Remove all files from the out dir.
     config
       .plugin('clean')
-      .use(CleanWebpackPlugin, [
-        itemsToClean,
-        { verbose: !!verbose }
-        // join(dist, '/**/*'),
-        // {
-        //   root: dist
-        // }
-      ])
+      .use(CleanWebpackPlugin, //[
+        //itemsToClean,
+        //{ verbose: !!verbose }
+        //// join(dist, '/**/*'),
+        //// {
+        ////   root: dist
+        //// }
+      //]
+      )
       .end();
 
     // Copy native app resources to out dir.
@@ -886,27 +887,23 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
     config
       .plugin('copy-assets')
       .use(CopyWebpackPlugin, [
-        [
+        { patterns : [
           {
-            from: {
-              glob: 'fonts/**'
-            }
+            from:'fonts/**',
+            context: resolve(isNativeOnly === true ? appFullPath : api.resolve('src')),
+            globOptions : { ignore: [`${relative(appPath, appResourcesFullPath)}/**`]}
           },
           {
-            from: {
-              glob: '**/*.+(jpg|png)'
-            }
+            from: '**/*.+(jpg|png)',
+            context: resolve(isNativeOnly === true ? appFullPath : api.resolve('src')),
+            globOptions : { ignore: [`${relative(appPath, appResourcesFullPath)}/**`]}
           },
           {
-            from: {
-              glob: 'assets/**/*'
-            }
+            from: 'assets/**/*',
+            context: resolve(isNativeOnly === true ? appFullPath : api.resolve('src')),
+            globOptions : { ignore: [`${relative(appPath, appResourcesFullPath)}/**`]}
           }
-        ],
-        {
-          context: resolve(isNativeOnly === true ? appFullPath : api.resolve('src')),
-          ignore: [`${relative(appPath, appResourcesFullPath)}/**`]
-        }
+        ]}
       ])
       .end();
 
@@ -955,8 +952,8 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
       // directly to edit it.
       const forTSPluginConfig = config.plugin('fork-ts-checker').get('args')[0];
 
-      forTSPluginConfig.tsconfig = resolve(projectRoot, tsconfigFileName);
-      forTSPluginConfig.tslint = fs.pathExistsSync(resolve(projectRoot, 'tslint.json')) ? resolve(projectRoot, 'tslint.json') : false;
+      //forTSPluginConfig.tsconfig = resolve(projectRoot, tsconfigFileName);
+      //forTSPluginConfig.tslint = fs.pathExistsSync(resolve(projectRoot, 'tslint.json')) ? resolve(projectRoot, 'tslint.json') : false;
       forTSPluginConfig.checkSyntacticErrors = false;
 
       config.plugins.delete('fork-ts-checker').end();
@@ -967,7 +964,7 @@ const nativeConfig = (api, projectOptions, env, projectRoot, platform) => {
         .end();
     }
 
-    // the next several items are disabled as they are mirrored from the nativescript-dev-webpack
+    // the next several items are disabled as they are mirrored from the @nativescript/webpack
     // project.  Need to figure out how to integrate some of that projects cli ability into this one.
     config.when(report, (config) => {
       config
@@ -1131,12 +1128,13 @@ const webConfig = (api, projectOptions, env, projectRoot) => {
     // Remove all files from the out dir.
     config
       .plugin('clean')
-      .use(CleanWebpackPlugin, [
-        join(dist, '/**/*'),
-        {
-          root: dist
-        }
-      ])
+      .use(CleanWebpackPlugin, //[
+        //join(dist, '/**/*'),
+        //{
+        //  root: dist
+        //}
+      //]
+      )
       .end();
 
     // Copy assets to out dir. Add your own globs as needed.
@@ -1147,27 +1145,23 @@ const webConfig = (api, projectOptions, env, projectRoot) => {
     config
       .plugin('copy-assets')
       .use(CopyWebpackPlugin, [
-        [
+        { patterns : [
           {
-            from: {
-              glob: 'fonts/**'
-            }
+            from: 'fonts/**',
+            context: resolve(api.resolve('src')),
+            globOptions: { ignore: [`${relative(appPath, appResourcesFullPath)}/**`]}
           },
           {
-            from: {
-              glob: '**/*.+(jpg|png)'
-            }
+            from: '**/*.+(jpg|png)',
+            context: resolve(api.resolve('src')),
+            globOptions: { ignore: [`${relative(appPath, appResourcesFullPath)}/**`]}
           },
           {
-            from: {
-              glob: 'assets/**/*',
-              ignore: ['**/*.+(jpg|png)']
-            }
+            from: 'assets/**/*',
+            context: resolve(api.resolve('src')),
+            globOptions: { ignore: [`${relative(appPath, appResourcesFullPath)}/**`,'**/*.+(jpg|png)']}
           }
-        ],
-        {
-          context: resolve(api.resolve('src')),
-          ignore: [`${relative(appPath, appResourcesFullPath)}/**`]
+        ]
         }
       ])
       .end();
@@ -1210,8 +1204,8 @@ const webConfig = (api, projectOptions, env, projectRoot) => {
       // directly to edit it.
       const forTSPluginConfig = config.plugin('fork-ts-checker').get('args')[0];
 
-      forTSPluginConfig.tsconfig = resolve(projectRoot, 'tsconfig.json');
-      forTSPluginConfig.tslint = fs.pathExistsSync(resolve(projectRoot, 'tslint.json')) ? resolve(projectRoot, 'tslint.json') : false;
+      //forTSPluginConfig.tsconfig = resolve(projectRoot, 'tsconfig.json');
+      //forTSPluginConfig.tslint = fs.pathExistsSync(resolve(projectRoot, 'tslint.json')) ? resolve(projectRoot, 'tslint.json') : false;
 
       config.plugins.delete('fork-ts-checker').end();
 
